@@ -40,7 +40,7 @@ public class AoEDamage : MonoBehaviour {
 
 		public override string GetName()
 		{
-			return "AoE Damage";
+			return "AoE Damage - from " + damager.team;
 		}
 	
 	} 

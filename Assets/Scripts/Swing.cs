@@ -2,14 +2,16 @@
 using System.Collections;
 
 public class Swing : MonoBehaviour {
-	public bool swing;	
-	public bool swingK;// Reference to the animator bool to trigger the state.
-	
+
+	//weapons to disable when not swinging
+	public GameObject[] weaponPrefabs;
+
+	private KeyCode weaponSwitchR = KeyCode.C;
+	private KeyCode weaponSwitchL = KeyCode.Z;
+
 	private Animator anim;		// Reference to the animator component.
 	private GameObject player;
-	
-	
-	
+
 	// Use this for initialization
 	void Start () {
 		

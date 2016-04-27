@@ -105,7 +105,7 @@ public class ContactDamage : MonoBehaviour {
 
 		nextDamageTimes = newDamageTimes;
 
-		Debug.Log("counts: " + Utils.DictionaryToString(entitiesInsideCount) + " times: " + Utils.DictionaryToString(nextDamageTimes));
+		//Debug.Log("counts: " + Utils.DictionaryToString(entitiesInsideCount) + " times: " + Utils.DictionaryToString(nextDamageTimes));
 	}
 
 	public void OnTriggerExit(Collider collider)
