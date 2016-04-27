@@ -1,18 +1,18 @@
-﻿using UnityEngine;
-using System.Collections;
+using UnityEngine;
+using System.Collections.Generic;
 
-public abstract class HealthEntity : MonoBehaviour {
+public abstract class HealthEntity : MonoBehaviour, IHealthEntity {
 
 	//the team that the entity is on.  Damage won't affect entities on the same team as the damage source.
-	//if set to empty string, teams are disable and all
+	//if set to empty string, teams are disabled and all dmage will hit
 	public string team = "Enemies";
 	
 	//Maximum health that the entity has
 	public int maxHealth = 10;
 	public int health = 10;
 
-	public bool showDamageEffect;
 
+	HashSet<DamageSource> damagesThisFrame = new HashSet<DamageSource>();
 
 
 	//returns true if the entity is on the team provided
@@ -23,17 +23,22 @@ public abstract class HealthEntity : MonoBehaviour {
 			return false;
 		}
 
-		return team.Equals(teamToCheck)
+		return team.Equals(teamToCheck);
 	}
 
-	public void Damage(DamageSource source, int amount)
+	public void Damage(string damagerTeam, DamageSource source, int amount)
 	{
+		if(IsOnTeam(damagerTeam))
+		{
+			return;
+		}
+
 		OnDamage(source, amount);
 		health -= amount;
 
-		if(health <= 0)
+		if(!IsAlive ())
 		{
-			OnDie ()
+			OnDie ();
 		}
 	}
 
@@ -43,33 +48,35 @@ public abstract class HealthEntity : MonoBehaviour {
 		OnHeal(amount);
 	}
 
+	void LateUpdate()
+	{
+		//reset 
+		damagesThisFrame.Clear();
+	}
+
 	//Use this to insert your own damage actions 
-	protected void OnDamage(DamageSource source, int amount) {}
-	protected void OnHeal(int amount){}
+	protected virtual void OnDamage(DamageSource source, int amount) {}
+	protected virtual void OnHeal(int amount){}
 
 	//called when the entity dies.  Default: destroy the GameObject
 	protected void OnDie()
 	{
 		GameObject.Destroy(gameObject);
 	}
-
-	public static class EntityDamageSource : DamageSource
+	
+	public IHealthEntity GetParent()
 	{
-		public HealthEntity source
-		{
-			get
-			{
-				return source;
-			}
-		}
-
-		
-		public string GetName()
-		{
-			return "Entity - " + source.gameObject.name;
-		}
-		
+		return null;
 	}
 
+	public bool IsAlive()
+	{
+		return health > 0;
+	}
+
+	public GameObject GetGameObject()
+	{
+		return gameObject;
+	}
 
 }
