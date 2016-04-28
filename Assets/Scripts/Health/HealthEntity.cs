@@ -14,6 +14,7 @@ public abstract class HealthEntity : MonoBehaviour, IHealthEntity {
 
 	HashSet<DamageSource> damagesThisFrame = new HashSet<DamageSource>();
 
+    protected HashSet<DamageablePart> subParts = new HashSet<DamageablePart>();
 
 	//returns true if the entity is on the team provided
 	public bool IsOnTeam(string teamToCheck)
@@ -28,6 +29,9 @@ public abstract class HealthEntity : MonoBehaviour, IHealthEntity {
 
 	public void Damage(string damagerTeam, DamageSource source, int amount)
 	{
+
+        Debug.Log("Damaged " + amount + " by " + source.GetName() + " on team " + damagerTeam);
+
 		if(IsOnTeam(damagerTeam))
 		{
 			return;
@@ -62,6 +66,11 @@ public abstract class HealthEntity : MonoBehaviour, IHealthEntity {
 	protected void OnDie()
 	{
 		GameObject.Destroy(gameObject);
+
+        foreach(DamageablePart part in subParts)
+        {
+            GameObject.Destroy(part);
+        }
 	}
 	
 	public IHealthEntity GetParent()
@@ -78,5 +87,11 @@ public abstract class HealthEntity : MonoBehaviour, IHealthEntity {
 	{
 		return gameObject;
 	}
+
+    //called by DamageableParts to let the main entity know they exist
+    public void RegisterSubpart(DamageablePart part)
+    {
+        subParts.Add(part);
+    }
 
 }

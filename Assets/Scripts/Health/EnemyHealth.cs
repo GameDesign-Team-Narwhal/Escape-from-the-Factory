@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -10,7 +10,9 @@ public class EnemyHealth : HealthEntity {
 	
 	List<Renderer> renderers;
 
-	void Awake()
+    //we need to initialize after all of the DamageableParts have been added to the list in the HealthEntity
+    //which happens in Awake()
+	void Start()
 	{
 
 		renderers = Utils.GetComponentsInChildren<Renderer>(gameObject);
@@ -18,6 +20,15 @@ public class EnemyHealth : HealthEntity {
 		{
 			renderers.Add(GetComponent<Renderer>());
 		}
+
+        foreach(DamageablePart part in subParts)
+        {
+            Renderer partRenderer = part.GetComponent<Renderer>();
+            if(partRenderer != null)
+            {
+                renderers.Add(partRenderer);
+            }
+        }
 
 	}
 

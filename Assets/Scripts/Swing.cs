@@ -1,37 +1,59 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class Swing : MonoBehaviour {
 
 	//weapons to disable when not swinging
-	public GameObject[] weaponPrefabs;
+	public GameObject lhandKatar;
+    public GameObject rhandSword;
 
-	private KeyCode weaponSwitchR = KeyCode.C;
-	private KeyCode weaponSwitchL = KeyCode.Z;
 
 	private Animator anim;		// Reference to the animator component.
 	private GameObject player;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
+    void Awake()
+    {
+        anim = GetComponent<Animator>();
+
+        SetWeaponEnabled(lhandKatar, false);
+        SetWeaponEnabled(rhandSword, false);
+
+    }
+
+    //this is to stop swords from doing damage even if you don't swing them
+    void SetWeaponEnabled(GameObject weapon, bool enabled)
+    {
+        foreach(Collider collider in weapon.GetComponents<Collider>())
+        {
+            if(collider.isTrigger)
+            {
+                collider.enabled = enabled;
+            }
+        }
+    }
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+    {
 		
-		anim = GetComponent<Animator>();
-		if (Input.GetKey (KeyCode.E)) {
-			Debug.Log("hi");
-			anim.SetBool ("swing", true);
-		} else {
-			anim.SetBool ("swing", false);
-		}
-		if (Input.GetKey (KeyCode.Q)) {
-			Debug.Log("hi");
-			anim.SetBool ("swingK", true);
-		} else {
-			anim.SetBool ("swingK", false);
-		}
-	}
+		if (Input.GetKeyDown(KeyCode.E))
+        {
+			anim.SetTrigger("swingR");
+            SetWeaponEnabled(rhandSword, true);
+		} 
+
+		if (Input.GetKeyDown(KeyCode.Q))
+        {
+			anim.SetTrigger("swingL");
+            SetWeaponEnabled(lhandKatar, true);
+        }
+    }
+
+    IEnumerator disableWeaponAfterAnim(GameObject weapon)
+    {
+        yield return Utils.WaitForAnimation(anim);
+        SetWeaponEnabled(weapon, false);
+
+        yield break;
+    }
 }

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 // Script to put on sub-objects of damageable entities so that damage to them can be transmitted to the main entity
@@ -17,13 +17,17 @@ public class DamageablePart : MonoBehaviour, IHealthEntity {
 	}
 
 	// Use this for initialization
-	void Start () 
+	void Awake () 
 	{
 		_healthEntity = mainEntity.GetComponent<HealthEntity>();
 		if(healthEntity == null)
 		{
 			Debug.LogError("DamageablePart: entity does not have health");
 		}
+        else
+        {
+            _healthEntity.RegisterSubpart(this);
+        }
 	}
 
 	//damage the entity by amount.  Does no damage if the provided team is the same as the entity's.
