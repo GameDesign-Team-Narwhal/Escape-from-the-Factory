@@ -10,6 +10,8 @@ public class EnemyHealth : HealthEntity {
 	
 	List<Renderer> renderers;
 
+	Dictionary<Renderer, Color> rendererInitialColors = new Dictionary<Renderer, Color>();
+
     //we need to initialize after all of the DamageableParts have been added to the list in the HealthEntity
     //which happens in Awake()
 	void Start()
@@ -38,8 +40,13 @@ public class EnemyHealth : HealthEntity {
 		{
 			foreach(Renderer renderer in renderers)
 			{
+
 				if(renderer != null)
 				{
+					if(!rendererInitialColors.ContainsKey(renderer))
+					{
+						rendererInitialColors.Add(renderer, renderer.material.color);
+					}
 					renderer.material.color = onDamageColor;
 				}
 			}
@@ -55,9 +62,14 @@ public class EnemyHealth : HealthEntity {
 		{
 			if(renderer != null)
 			{
-				renderer.material.color = Color.white;
+				if(rendererInitialColors.ContainsKey(renderer))
+				{
+					renderer.material.color = rendererInitialColors[renderer];
+				}
 			}
 		}
+
+		rendererInitialColors.Clear();
 
 		yield break;
 	}

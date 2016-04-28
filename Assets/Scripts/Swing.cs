@@ -40,12 +40,14 @@ public class Swing : MonoBehaviour {
         {
 			anim.SetTrigger("swingR");
             SetWeaponEnabled(rhandSword, true);
+			StartCoroutine(disableWeaponAfterAnim(rhandSword));
 		} 
 
 		if (Input.GetKeyDown(KeyCode.Q))
         {
 			anim.SetTrigger("swingL");
             SetWeaponEnabled(lhandKatar, true);
+			StartCoroutine(disableWeaponAfterAnim(lhandKatar));
         }
     }
 

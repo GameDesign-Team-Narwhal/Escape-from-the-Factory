@@ -3,13 +3,10 @@ using System.Collections;
 
 public class PlayerHealth : HealthEntity {
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+	//called when the entity dies.  Default: destroy the GameObject
+	protected override void OnDie()
+	{
+		//do nothing, for now
+		Debug.LogWarning("Player died.");
 	}
 }

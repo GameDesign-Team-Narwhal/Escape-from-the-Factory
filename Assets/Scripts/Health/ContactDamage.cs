@@ -17,7 +17,8 @@ public class ContactDamage : MonoBehaviour {
 
 	private ContactDamageSource damageSource;
 
-	public float knockback = 0;
+	public float verticalKnockback = 0; //extra vertical nockbac impulse
+	public float knockback = 0; //knockback magnitude, exterted on the atackee away from the source
 
 	void Awake()
 	{
@@ -76,7 +77,9 @@ public class ContactDamage : MonoBehaviour {
 		{
 			Vector3 deltaPos = body.gameObject.transform.position - transform.position;
 			Vector3 knockbackImpulse = deltaPos.normalized * knockback;
-			
+
+			knockbackImpulse.y += verticalKnockback;
+
 			body.AddForce(knockbackImpulse, ForceMode.Impulse);
 		}
 	}

@@ -29,13 +29,14 @@ public abstract class HealthEntity : MonoBehaviour, IHealthEntity {
 
 	public void Damage(string damagerTeam, DamageSource source, int amount)
 	{
-
-        Debug.Log("Damaged " + amount + " by " + source.GetName() + " on team " + damagerTeam);
-
-		if(IsOnTeam(damagerTeam))
+		
+		if(IsOnTeam(damagerTeam) || damagesThisFrame.Contains(source))
 		{
 			return;
 		}
+
+		Debug.Log("Damaged " + amount + " by " + source.GetName() + " on team " + damagerTeam);
+
 
 		OnDamage(source, amount);
 		health -= amount;
@@ -63,7 +64,7 @@ public abstract class HealthEntity : MonoBehaviour, IHealthEntity {
 	protected virtual void OnHeal(int amount){}
 
 	//called when the entity dies.  Default: destroy the GameObject
-	protected void OnDie()
+	protected virtual void OnDie()
 	{
 		GameObject.Destroy(gameObject);
 
