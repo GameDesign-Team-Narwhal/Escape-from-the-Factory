@@ -35,7 +35,7 @@ public class PolarVec2
 
 	//3d vector with the y axis as the axis of rotation
 	// (the vector will be on the XZ plane)
-	public Vector2 Cartesian3DHorizontal
+	public Vector3 Cartesian3DHorizontal
 	{
 		get
 		{
@@ -63,6 +63,11 @@ public class PolarVec2
 	{
 		return FromCartesian(cartesian.x, cartesian.y);
 	}
+
+    public override string ToString()
+    {
+        return "PolarVec2: A=" + A + "�, r=" + r;
+    }
 }
 
 

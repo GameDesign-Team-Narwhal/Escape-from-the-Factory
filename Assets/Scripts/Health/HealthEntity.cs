@@ -8,7 +8,7 @@ public abstract class HealthEntity : MonoBehaviour, IHealthEntity {
 	public string team = "Enemies";
 	
 	//Maximum health that the entity has
-	public int maxHealth = 10;
+	public uint maxHealth = 10;
 	public int health = 10;
 
 
