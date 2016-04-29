@@ -11,23 +11,26 @@ public class ConveyorBelt : ObjectCounter {
 	void Update () {
 		foreach(GameObject obj in objectsInTrigger)
 		{
-			Rigidbody body = obj.GetComponent<Rigidbody>();
-			
-			if(body != null)
+			if(obj != null)
 			{
-				Vector3 newVelocity = body.velocity;
-
-				if(horizontal)
+				Rigidbody body = obj.GetComponent<Rigidbody>();
+				
+				if(body != null)
 				{
-					newVelocity.x = constantVelocity.x;
-					newVelocity.z = constantVelocity.z;
-				}
-				if(vertical)
-				{
-					newVelocity.y = constantVelocity.y;
-				}
+					Vector3 newVelocity = body.velocity;
 
-				body.velocity = newVelocity;
+					if(horizontal)
+					{
+						newVelocity.x = constantVelocity.x;
+						newVelocity.z = constantVelocity.z;
+					}
+					if(vertical)
+					{
+						newVelocity.y = constantVelocity.y;
+					}
+
+					body.velocity = newVelocity;
+				}
 			}
 		}
 	}

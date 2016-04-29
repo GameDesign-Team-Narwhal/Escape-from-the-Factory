@@ -11,27 +11,32 @@ public class CurvedConveyorBelt : ObjectCounter {
 	public Vector3 center;
 
     public GameObject CenterIndicator;
-	
+
+	public bool reverseDir = false;
+
 	// Update is called once per frame
 	void Update () {
-
-        CenterIndicator.transform.position = center;
+		base.Update();
+		CenterIndicator.transform.position = transform.TransformPoint(center);
 		foreach(GameObject obj in objectsInTrigger)
 		{
-			Rigidbody body = obj.GetComponent<Rigidbody>();
-			
-			if(body != null)
+			if(obj != null)
 			{
-
-				Vector3 deltaPos = obj.transform.position - center;
-				PolarVec2 polarDeltaPos = PolarVec2.FromCartesian(deltaPos.x, deltaPos.z);
-
-				//velocity is always tangential to dir to the center
-				polarDeltaPos.A += 90 * Mathf.Sign(polarDeltaPos.A);
+				Rigidbody body = obj.GetComponent<Rigidbody>();
 				
-				body.velocity = polarDeltaPos.Cartesian3DHorizontal.normalized * constantVelocity;
+				if(body != null)
+				{
 
-                //Debug.Log("new velocity: " + polarDeltaPos.Cartesian3DHorizontal.normalized.ToString() + ", polar: " + polarDeltaPos.ToString());
+					Vector3 deltaPos = obj.transform.position - transform.TransformPoint(center);
+					PolarVec2 polarDeltaPos = PolarVec2.FromCartesian(deltaPos.x, deltaPos.z);
+
+					//velocity is always tangential to dir to the center
+					polarDeltaPos.A += (reverseDir ? 1 : -1) * 90 * Mathf.Sign(polarDeltaPos.A);
+					
+					body.velocity = -(polarDeltaPos.Cartesian3DHorizontal.normalized * constantVelocity);
+
+	               //Debug.Log(/*"deltaPos: " + deltaPos + */" new velocity: " + polarDeltaPos.Cartesian3DHorizontal.ToString() + ", polar: " + polarDeltaPos.ToString());
+				}
 			}
 		}
 	}

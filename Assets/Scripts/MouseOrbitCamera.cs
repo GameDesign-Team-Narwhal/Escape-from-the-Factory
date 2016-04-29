@@ -22,7 +22,7 @@ public class MouseOrbitCamera : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		hAngle = 0;
+		hAngle = transform.rotation.eulerAngles.y;
 		vAngle = 0;
 
 		initialOffset = transform.position - toOrbit.transform.position;

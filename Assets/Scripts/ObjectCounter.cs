@@ -4,7 +4,7 @@ using System.Collections;
 
 public abstract class ObjectCounter : MonoBehaviour {
 	
-	protected List<GameObject> objectsInTrigger = new List<GameObject>();
+	protected HashSet<GameObject> objectsInTrigger = new HashSet<GameObject>();
 
 	void OnTriggerEnter(Collider otherCollider)
 	{
@@ -19,6 +19,15 @@ public abstract class ObjectCounter : MonoBehaviour {
 
 		OnObjectExit (otherCollider.gameObject);
 
+	}
+
+	public void Update()
+	{
+		if(objectsInTrigger.Contains(null))
+		{
+			objectsInTrigger.Remove(null);
+			Debug.Log ("Removed null?!?");
+		}
 	}
 
 	void OnObjectEnter(GameObject obj){}

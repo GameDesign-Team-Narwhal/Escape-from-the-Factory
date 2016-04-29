@@ -54,7 +54,7 @@ public class PolarVec2
 		PolarVec2 vector = new PolarVec2();
 
 		vector.r = Mathf.Sqrt(x*x + y*y);
-		vector.Theta = Mathf.Atan2(x, y);
+		vector.Theta = Mathf.Atan2(y, x);
 
 		return vector;
 	}
@@ -66,7 +66,7 @@ public class PolarVec2
 
     public override string ToString()
     {
-        return "PolarVec2: A=" + A + "�, r=" + r;
+        return "PolarVec2: A=" + A + "deg, r=" + r;
     }
 }
 

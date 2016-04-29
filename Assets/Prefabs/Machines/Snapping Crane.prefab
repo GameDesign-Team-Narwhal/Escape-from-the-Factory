@@ -48,7 +48,6 @@ GameObject:
   - 65: {fileID: 6547296}
   - 135: {fileID: 13561202}
   - 114: {fileID: 11413852}
-  - 114: {fileID: 11454488}
   m_Layer: 0
   m_Name: Snapping Crane
   m_TagString: Untagged
@@ -156,6 +155,7 @@ GameObject:
   - 33: {fileID: 3325818}
   - 23: {fileID: 2361926}
   - 65: {fileID: 6506902}
+  - 114: {fileID: 11476952}
   m_Layer: 0
   m_Name: Arm lower
   m_TagString: Untagged
@@ -357,7 +357,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 119932}
   m_LocalRotation: {x: -.5, y: -.5, z: -.500000119, w: .49999994}
-  m_LocalPosition: {x: -8.84000015, y: -1.61000001, z: -9.14000034}
+  m_LocalPosition: {x: -8.84000015, y: -1.61000001, z: -13.6199999}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 463738}
@@ -1099,18 +1099,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   team: Enemies
-  damageAmount: 3
+  damageAmount: 1
   continuousDamage: 0
   initialDamage: 1
   continuousDamagePeriod: 0
   verticalKnockback: 15
   knockback: 50
---- !u!114 &11454488
+--- !u!114 &11476952
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 119932}
+  m_GameObject: {fileID: 158468}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b93a4ba19ffe42040ba472133b099ccb, type: 3}
